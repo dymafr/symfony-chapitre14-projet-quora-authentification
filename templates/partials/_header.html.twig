@@ -1,0 +1,26 @@
+<header class="d-flex flex-row-nowrap justify-content-center p-20">
+  <div class="content flex-fill d-flex flex-row-nowrap align-items-center justify-content-between">
+  <a class="header-logo" href="{{ path('home') }}">
+    <img src="{{ asset('images/logo.svg')}}">
+  </a>
+  <div class="header-search p-10 flex-fill">
+    <i class="fa-solid fa-search"></i>
+    <input type="text">
+  </div>
+  {%- if is_granted('ROLE_USER') -%}
+    <div class="d-flex flow-row-nowrap justify-content-center">
+    <a href="{{ path('current_user') }}">
+      <img src="{{ app.user.picture }}" class="avatar avatar-lg mr-10">
+    </a>
+    <small class="d-flex flex-column justify-content-center">
+      <a href="{{ path('logout') }}">Déconnexion</a>
+    </small>
+    </div>
+  {% else %}
+    <div>
+      <a href="{{ path('signup') }}" class="btn btn-primary mr-5">Inscription</a>
+      <a href="{{ path('login') }}" class="btn btn-primary-stroke">Connexion</a>
+    </div>
+  {%- endif -%}
+  </div>
+</header>
