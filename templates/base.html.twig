@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<script defer src="{{ asset('js/index.js') }}"></script>
+		{% block styleSheets %}
+			<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+		{% endblock %}
+	</head>
+	<body class="d-flex flex-column">
+		{{ include('partials/_header.html.twig') }}
+		<div class="app-content flex-fill d-flex flex-row-nowrap justify-content-center">
+			<div class="content d-flex flex-row-nowrap flex-fill py-50">
+				{{ include('partials/_sidebar.html.twig') }}
+				<div class="flex-fill"> {% block body %}{% endblock %}</div>
+      </div>
+    </div>
+    {% for cat, list in app.flashes %}
+      {% for message in list %}
+          <div class="flash flash-{{ cat }}">{{ message }}</div>
+      {% endfor %}
+    {% endfor %}
+    {{ include('partials/_footer.html.twig') }}
+  </body>
+</html>

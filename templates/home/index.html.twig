@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wonder
+{% endblock %}
+
+{% block body %}
+
+  <ul>
+    {% for question in questions %}
+      <div class="block block-shadow d-flex flex-row mb-20">
+        {% include "partials/_rating.html.twig" with { rating: question.rating, from: 'question', id: question.id } %}
+        <a  href="{{ path('question_show', { id: question.id  }) }}" class="flex-fill d-flex flex-column">
+          <div class="mb-20 question-content pb-20">
+            <h3 class="mb-20">{{ question.title }}</h3>
+            <p>{{ question.content }}</p>
+          </div>
+          <div class="d-flex flex-row justify-content-between">
+            <div class="d-flex flex-row align-items-center">
+              <img class="avatar mr-10" src="https://randomuser.me/api/portraits/women/44.jpg"/>
+              <small>Demandé par <span class="clickable">Jean Louis</span></small>
+            </div>
+            <div class="d-flex flex-row align-items-center">
+              <i class="far fa-comment mr-10"></i>
+              <p>{{ question.nbrOfResponse }}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+    {% endfor %}
+  </ul>
+{% endblock %}
