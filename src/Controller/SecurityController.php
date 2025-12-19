@@ -22,7 +22,7 @@ final class SecurityController extends AbstractController
     ) {}
 
     #[Route('/signup', name: 'signup')]
-    public function signup(UserAuthenticatorInterface $userAuthenticator, Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher)
+    public function signup(UserAuthenticatorInterface $userAuthenticator, Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         $userForm = $this->createForm(UserType::class, $user);
@@ -52,5 +52,5 @@ final class SecurityController extends AbstractController
     }
 
     #[Route("/logout", name: "logout")]
-    public function logout() {}
+    public function logout(): void {}
 }
