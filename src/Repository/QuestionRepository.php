@@ -19,7 +19,7 @@ class QuestionRepository extends ServiceEntityRepository
     /**
      * @return Question[]
      */
-    public function getLastQuestionsWithAuthors()
+    public function getLastQuestionsWithAuthors(): array
     {
         return $this->createQueryBuilder('q')
             ->leftJoin('q.author', 'a')
@@ -30,9 +30,9 @@ class QuestionRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Question
+     * @return Question|null
      */
-    public function getQuestionsWithCommentsAndAuthors(string $id): Question
+    public function getQuestionsWithCommentsAndAuthors(int $id): ?Question
     {
         return $this->createQueryBuilder('q')
             ->andWhere('q.id = :id')

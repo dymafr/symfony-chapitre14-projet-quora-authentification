@@ -74,7 +74,7 @@ final class QuestionController extends AbstractController
 
     #[Route('/question/rating/{id}/{score}', name: 'question_rating')]
     #[IsGranted('ROLE_USER')]
-    public function ratingQuestion(Request $request, Question $question, int $score, EntityManagerInterface $em, VoteRepository $voteRepo)
+    public function ratingQuestion(Request $request, Question $question, int $score, EntityManagerInterface $em, VoteRepository $voteRepo): Response
     {
         $user = $this->getUser();
         if ($user !== $question->getAuthor()) {
@@ -106,7 +106,7 @@ final class QuestionController extends AbstractController
 
     #[Route('/comment/rating/{id}/{score}', name: 'comment_rating')]
     #[IsGranted('ROLE_USER')]
-    public function ratingComment(Request $request, Comment $comment, int $score, EntityManagerInterface $em, VoteRepository $voteRepo)
+    public function ratingComment(Request $request, Comment $comment, int $score, EntityManagerInterface $em, VoteRepository $voteRepo): Response
     {
         $user = $this->getUser();
         if ($user !== $comment->getAuthor()) {
