@@ -18,37 +18,38 @@ class Question
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'Veuillez renseigner le titre de la question.')]
-    #[Assert\Length(min: 25, max: 255, minMessage: 'Le titre doit faire au moins 25 caractères.', maxMessage: 'Le titre ne peut pas faire plus de 255 caractères.')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner un titre')]
+    #[Assert\Length(min: 20, minMessage: 'Veuillez détailler votre titre', max: 255, maxMessage: 'Le titre de votre question est trop long')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'Veuillez renseigner le contenu de la question.')]
-    #[Assert\Length(min: 100, minMessage: 'Le contenu doit faire au moins 100 caractères.')]
+    #[Assert\NotBlank(message: 'Veuillez détailler votre question')]
+    #[Assert\Length(min: 100, minMessage: 'Veuillez détailler votre question')]
     private ?string $content = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::SMALLINT)]
     private ?int $rating = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::SMALLINT)]
     private ?int $nbrOfResponse = null;
 
-    /**
-     * @var Collection<int, Comment>
-     */
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'question', orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'question', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
     #[ORM\ManyToOne(inversedBy: 'questions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
+    #[ORM\OneToMany(mappedBy: 'question', targetEntity: Vote::class)]
+    private Collection $votes;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->votes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,6 +155,36 @@ class Question
     public function setAuthor(?User $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Vote>
+     */
+    public function getVotes(): Collection
+    {
+        return $this->votes;
+    }
+
+    public function addVote(Vote $vote): static
+    {
+        if (!$this->votes->contains($vote)) {
+            $this->votes->add($vote);
+            $vote->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVote(Vote $vote): static
+    {
+        if ($this->votes->removeElement($vote)) {
+            // set the owning side to null (unless already changed)
+            if ($vote->getQuestion() === $this) {
+                $vote->setQuestion(null);
+            }
+        }
 
         return $this;
     }

@@ -15,31 +15,35 @@
       <div class="d-flex flex-row-nowrap align-items-center pb-30">
         <h3 class="mr-10">{{ question.title }}</h3>
         <div class="question-tag">QUESTION</div>
-        <img class="avatar ml-auto" src="https://randomuser.me/api/portraits/men/52.jpg">
+        <img class="avatar ml-auto" src="{{ asset(question.author.picture) }}">
       </div>
       <p class="question-text">{{ question.content }}</p>
+      {% if question.comments is not empty %}
       <div class="separator"></div>
+      {% endif %}
       {% for comment in question.comments %}
       <div class="d-flex flex-row-nowrap mb-20">
         {% include "partials/_rating.html.twig" with { rating: comment.rating, from: 'comment', id: comment.id} %}
         <div class="mb-20">
-          <div class="d-flex flex-row-nowrap align-items-center pb-10">
-            <img class="avatar mr-10" src="https://randomuser.me/api/portraits/men/51.jpg">
-            <p class="clickable">Jean Louis</p>
+          <a href="{{ path('user', {id : comment.author.id }) }}" class="d-flex flex-row-nowrap align-items-center pb-10">
+            <img class="avatar mr-10" src="{{ asset(comment.author.picture) }}">
+            <p class="clickable">{{ comment.author.fullname }}</p>
             <small class="ml-auto p-5">{{ comment.createdAt | ago(locale="fr") }}</small>
-          </div>
+          </a>
           <p class="question-response-text">{{ comment.content }}</p>
         </div>
       </div>
       {% endfor %}
+      {% if form is defined %}
       <div class="separator"></div>
       <h3 class="pb-20">Votre réponse</h3>
       <div class="comment-form">
         {{ form_start(form)}}
         {{ form_rest(form) }}
-        <button class="btn btn-primary">Envoyer</button>
+        <button class="btn btn-primary">soumettre</button>
         {{ form_end(form)}}
       </div>
+      {% endif %}
     </div>
   </div>
 </div>

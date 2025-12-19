@@ -1,9 +1,14 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
-    secret: '%env(APP_SECRET)%'
+    secret: "%env(APP_SECRET)%"
 
-    # Note that the session will be started ONLY if you read or write from it.
-    session: true
+    session:
+        handler_id: session.handler.native_file
+        cookie_lifetime: 604800
+        gc_maxlifetime: 604800
+        cookie_secure: true
+        cookie_samesite: lax
+        storage_factory_id: session.storage.factory.native
 
     #esi: true
     #fragments: true

@@ -156,6 +156,10 @@ small {
     margin-right: 20px;
 }
 
+.mb-10 {
+  margin-bottom: 10px;
+}
+
 .mb-20 {
     margin-bottom: 20px;
 }
@@ -295,6 +299,10 @@ textarea {
     border-radius: 50%;
 }
 
+.avatar-lg {
+  width: 40px;
+}
+
 .clickable {
     color: var(--primary);
     font-weight: var(--font-weight-semi-bold);
@@ -392,4 +400,17 @@ footer {
 
 .rating-down {
     color: var(--warning);
+}
+
+.question-text,
+.question-response-text {
+    line-height: var(--line-height-hight);
+    white-space: pre-wrap;
+}
+
+/* user profile */
+
+.profile-picture {
+  width: 150px;
+  border-radius: var(--border-radius);
 }
